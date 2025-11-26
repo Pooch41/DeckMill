@@ -1,0 +1,7 @@
+# Do not Share secrets
+/.env
+
+# Do not say too much
+/.venv/
+/__pycache__/
+DeckMill/__pycache__
