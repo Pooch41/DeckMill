@@ -5,3 +5,5 @@
 /.venv/
 /__pycache__/
 DeckMill/__pycache__
+collection/__pycache__
+.idea
