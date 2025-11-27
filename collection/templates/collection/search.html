@@ -1,0 +1,53 @@
+{% extends 'collection/base.html' %}
+
+{% block content %}
+<div class="max-w-2xl mx-auto mt-10">
+    <!-- Header -->
+    <div class="text-center mb-12">
+        <h1 class="text-5xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-cyan-500 mb-4">
+            DeckMill
+        </h1>
+    </div>
+
+    <!-- Search Form -->
+    <form class="relative group z-10 flex gap-2"
+          hx-get="/"
+          hx-target="#search-results"
+          hx-indicator="#spinner"
+          hx-trigger="submit">
+
+        <!-- Glow Effect -->
+        <div class="absolute -inset-1 bg-gradient-to-r from-emerald-600 to-blue-600 rounded-xl blur opacity-25 group-hover:opacity-75 transition duration-1000 group-hover:duration-200"></div>
+
+        <!-- Input Container -->
+        <div class="relative flex-grow">
+            <input type="text"
+                   name="q"
+                   class="w-full bg-slate-800 text-white border border-slate-700 rounded-xl px-6 py-4 text-xl focus:outline-none focus:ring-2 focus:ring-emerald-500 placeholder-slate-500 shadow-xl"
+                   placeholder="Search for a card (e.g. Black Lotus)..."
+                   autocomplete="off">
+
+            <!-- 1. The Outer Div -->
+            <div id="spinner" class="htmx-indicator absolute right-4 top-1/2 -translate-y-1/2 text-emerald-500">
+                <!-- 2. The Inner SVG -->
+                <svg class="w-6 h-6 animate-spin" fill="none" viewBox="0 0 24 24">
+                    <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                    <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                </svg>
+            </div>
+        </div>
+
+        <!-- Search Button -->
+        <button type="submit" class="relative bg-emerald-600 hover:bg-emerald-500 text-white px-6 rounded-xl font-bold transition-colors shadow-xl flex items-center justify-center group/btn">
+            <svg class="w-6 h-6 transform group-hover/btn:scale-110 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+            </svg>
+        </button>
+    </form>
+
+    <!-- Results Area (Swapped by HTMX) -->
+    <div id="search-results" class="mt-8 transition-all duration-300 ease-in-out">
+        <!-- Results appear here -->
+    </div>
+</div>
+{% endblock %}
