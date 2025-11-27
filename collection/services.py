@@ -1,7 +1,11 @@
 import requests
 from datetime import timedelta
-from django.utils import timezone
+
 from django.db.models import Q
+from django.utils import timezone
+from django.utils.timezone import is_naive, make_aware, get_current_timezone
+from functools import reduce
+
 from .models import CardDefinition
 
 SCRYFALL_API_URL = "https://api.scryfall.com/cards/named"
@@ -15,13 +19,26 @@ def get_card_data(card_name):
     3. Mana Cost is missing (Self-Healing)
     """
 
-    existing_card = CardDefinition.objects.filter(
-        Q(name__iexact=card_name) |
-        Q(name__istartswith=f"{card_name} //")
-    ).first()
+    search_words = card_name.strip().split()
+    query_parts = [Q(name__icontains=word) for word in search_words]
+    if query_parts:
+        query = reduce(lambda q1, q2: q1 & q2, query_parts)
+    else:
+        return None
+
+    existing_card = CardDefinition.objects.filter(query).first()
 
     if existing_card:
-        age = timezone.now() - existing_card.last_updated
+        last_updated_time = existing_card.last_updated
+
+        if is_naive(last_updated_time):
+            last_updated_time = make_aware(last_updated_time, timezone=get_current_timezone())
+
+        age = timezone.now() - last_updated_time
+
+        print(f"DEBUG: Last Updated: {existing_card.last_updated}")
+        print(f"DEBUG: Current Time: {timezone.now()}")
+        print(f"DEBUG: Age Delta: {age}")
 
         if existing_card.current_eur is None:
             print(f"💰 Price missing for '{card_name}'. Forcing refresh...")
@@ -85,6 +102,7 @@ def get_card_data(card_name):
                 'mana_cost': mana_cost,
                 'type_line': type_line,
                 'current_eur': data.get('prices', {}).get('eur'),
+                'last_updated': timezone.now()
             }
         )
 

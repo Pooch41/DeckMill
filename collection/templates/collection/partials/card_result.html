@@ -1,3 +1,4 @@
+{% load mana_tags %}
 {% if card %}
 <div class="bg-slate-800 border border-slate-700 rounded-2xl p-8 shadow-2xl animate-fade-in transition-all hover:border-emerald-500/30 relative group w-full mx-auto">
 
@@ -45,7 +46,7 @@
             <!-- Mana -->
             <div class="bg-slate-900/60 p-4 rounded-xl border border-slate-700/50 text-center">
                 <span class="block text-slate-500 text-[10px] uppercase tracking-widest font-bold mb-1">Mana Cost</span>
-                <span class="font-mono text-lg text-white">{{ card.mana_cost|default:"N/A" }}</span>
+                <span class="font-mono text-lg text-white">{{ card.mana_cost|mana_icons|default:"N/A" }}</span>
             </div>
 
             <!-- Price -->
