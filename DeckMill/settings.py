@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.contenttypes',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.postgres',
     'DeckMill',
     'collection',
     'account',
@@ -91,7 +92,7 @@ DATABASES = {
 }
 # User Models
 
-AUTH_USER_MODEL = 'collection.CustomUser'
+AUTH_USER_MODEL = 'account.CustomUser'
 
 # Password validation
 # https://docs.djangoproject.com/en/5.2/ref/settings/#auth-password-validators
