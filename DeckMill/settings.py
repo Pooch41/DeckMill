@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'DeckMill',
     'collection',
+    'account',
     'rest_framework'
 ]
 
@@ -88,7 +89,9 @@ DATABASES = {
         'PORT': os.getenv('DB_PORT'),
     }
 }
+# User Models
 
+AUTH_USER_MODEL = 'collection.CustomUser'
 
 # Password validation
 # https://docs.djangoproject.com/en/5.2/ref/settings/#auth-password-validators

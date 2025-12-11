@@ -1,4 +1,5 @@
 from django.db import models
+from account.models import CustomUser as User
 
 class CardDefinition(models.Model):
     """
@@ -19,3 +20,18 @@ class CardDefinition(models.Model):
 
     def __str__(self):
         return self.name
+
+class BaseStorage(models.Model):
+    name = models.CharField(max_length=100)
+    owner = models.ForeignKey(User, on_delete=models.CASCADE)
+    cards = models.JSONField(default=dict, blank=True)
+
+    class Meta:
+        abstract = True
+
+class Collection(BaseStorage):
+    description = models.TextField(blank=True, null=True)
+
+class Deck(BaseStorage):
+    description = models.TextField(blank=True, null=True)
+    format = models.CharField(max_length= 50, blank=True, null=True)

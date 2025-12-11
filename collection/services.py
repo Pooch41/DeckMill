@@ -16,7 +16,7 @@ def get_card_data(card_name):
     Refreshes from Scryfall if:
     1. Data is older than 24 hours
     2. Price is missing
-    3. Mana Cost is missing (Self-Healing)
+    3. Mana Cost is missing
     """
 
     search_words = card_name.strip().split()
